@@ -46,6 +46,7 @@ NPR_FEEDS = {
 }
 
 NPR_LOGO_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d7/National_Public_Radio_logo.svg/320px-National_Public_Radio_logo.svg.png"
+USER_AGENT = "Tronbyt NPR_NEWS /0.0 (https://github.com/tronbyt/apps/tree/main/apps/npr/;)"
 
 THEMES = {
     "dark_blue": {
@@ -150,8 +151,8 @@ def render_logo(colors, width, height):
 
     if cached_logo != None:
         return render.Image(src = base64.decode(cached_logo), width = width, height = height)
-
-    res = http.get(NPR_LOGO_URL)
+    headers = {'User-Agent': USER_AGENT}
+    res = http.get(NPR_LOGO_URL, headers = headers)
     if res.status_code == 200:
         cache.set(NPR_LOGO_URL, base64.encode(res.body()), ttl_seconds = CACHE_TTL_SECONDS)
         return render.Image(src = res.body(), width = width, height = height)
