@@ -151,7 +151,7 @@ def render_logo(colors, width, height):
 
     if cached_logo != None:
         return render.Image(src = base64.decode(cached_logo), width = width, height = height)
-    headers = {'User-Agent': USER_AGENT}
+    headers = {"User-Agent": USER_AGENT}
     res = http.get(NPR_LOGO_URL, headers = headers)
     if res.status_code == 200:
         cache.set(NPR_LOGO_URL, base64.encode(res.body()), ttl_seconds = CACHE_TTL_SECONDS)
